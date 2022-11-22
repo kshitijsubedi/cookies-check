@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <script>
+      const checkCookiesEnable = () => {
+        let isCookieEnabled = window.navigator.cookieEnabled ? true : false;
+        if (
+          typeof window.navigator.cookieEnabled == 'undefined' &&
+          !isCookieEnabled
+        ) {
+          document.cookie = '3rdpartycookies';
+          isCookieEnabled =
+            document.cookie.indexOf('3rdpartycookies') != -1 ? true : false;
+        }
+
+        return isCookieEnabled;
+      };
+      (function () {
+        window.addEventListener('message', (event) => {
+          try {
+            let data = JSON.parse(event.data);
+            if (data['test'] !== 'cookie') return;
+            let result = checkCookiesEnable();
+            parent.postMessage(
+              JSON.stringify({
+                result: result,
+              }),
+              event.origin
+            );
+          } catch (e) {
+            console.error('Error:', e);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
