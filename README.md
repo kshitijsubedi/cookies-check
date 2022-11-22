@@ -1,6 +1,7 @@
 # 3rd Party Cookies Check
-
 Check Whether Browser supports Third Party Cookies or not.
+
+[Test URL to check 🍪] https://cookies-check-kshitijsubedi.vercel.app/test.html
 
 <img src="https://media.giphy.com/media/xT0xeMA62E1XIlup68/giphy.gif" />
 
