@@ -3,7 +3,12 @@
   <head> </head>
   <body>
     <script>
-      // https://medium.com/devscollab/detecting-whether-3rd-party-cookies-are-enabled-or-not-in-javascript-4328715a527b
+    
+      /**
+      * If the browser supports cookies, it will return true, otherwise it will return false.
+      * @returns A function that returns a boolean value.
+      */
+      
       const checkCookiesEnable = () => {
         let isCookieEnabled = window.navigator.cookieEnabled ? true : false;
         if (
@@ -17,6 +22,13 @@
 
         return isCookieEnabled;
       };
+      
+      /**
+      * Listening for a message from the parent window. If the message is not a cookie test, it will
+      * return. If it is a cookie test, it will check if cookies are enabled and send a message back to
+      * the parent window.
+      */
+  
       (function () {
         window.addEventListener('message', (event) => {
           try {
