@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Check Cookies Support 🍪</title>
+  <link rel="stylesheet" href="https://unpkg.com/chota@latest" />
+</head>
+<body>
+  <div class="card container">
+    <h2>3rd Party Cookies Checker</h2>
+    <button id="check" class="button primary outline">Detect 🍪</button>
+    <footer class="is-center">
+      <a id="result" class="button clear"></a>
+    </footer>
+  </div>
+  <script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+    function cookieTest(iFrameUri) {
+      return new Promise(function (resolve, reject) {
+        let messageHandler = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            resolve(data['result']);
+          } catch {}
+          window.removeEventListener('message', messageHandler);
+          document.body.removeChild(frame);
+        };
+        window.addEventListener('message', messageHandler);
+        const frame = document.createElement('iframe');
+        frame.src = iFrameUri;
+        frame.sandbox = 'allow-scripts allow-same-origin';
+        frame.style = `display:none`;
+        frame.onload = (e) => {
+          frame.contentWindow.postMessage(
+            JSON.stringify({ test: 'cookie' }),
+            '*'
+          );
+        };
+        document.body.appendChild(frame);
+      });
+    }
+    let btn = document.getElementById('check');
+    let res = document.getElementById('result');
+    btn.addEventListener('click', async (e) => {
+      let result = await cookieTest('https://cookies-check.vercel.app');
+      console.log('Result', result);
+      if (result) {
+        confetti();
+        res.textContent = 'Supports !';
+        res.classList.remove('clear');
+        res.classList.add('success');
+      } else {
+        res.textContent = 'Browser has disabled 3rd Party Cookies!! ';
+        res.classList.remove('clear');
+        res.classList.add('error');
+      }
+    });
+  </script>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 33vh;
+      width: 50%;
+    }
+    #result {
+      margin: 1rem;
+    }
+  </style>
+</body>
