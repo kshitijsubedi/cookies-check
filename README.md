@@ -1,3 +1,7 @@
-# cookies-check
+# 3rd Party Cookies Check
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/web-platform-xn5c2f)
+Check Whether Browser supports Third Party Cookies or not.
+
+https://media.giphy.com/media/xT0xeMA62E1XIlup68/giphy.gif
+
+[Use this URL as iFrame ⚡️] (https://cookies-check.vercel.app)
